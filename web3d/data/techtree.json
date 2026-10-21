@@ -1,0 +1,510 @@
+{
+  "_meta": {
+    "node_count": 35,
+    "catalog_source": {
+      "page": "Unlocks",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks",
+      "last_edited": "2026-08-07"
+    },
+    "category_source": "flow skilltree.txt; visual grouping only, not a claim about prerequisites.",
+    "visual_edge_source": "User-provided skill tree screenshot; visual-only grouping, separate from verified gameplay prerequisites.",
+    "prerequisite_source": "User-provided prerequisite table transcribed from the visible connectors in the skill tree screenshot; nodes absent from that table remain unverified.",
+    "field_size_source": "The user specified the 1x3 first tier, 3x3 second tier, and 10x10 final tier. Expand_2 wiki confirms subsequent expansion to a square grid; intermediate 4x4 through 9x9 dimensions follow the eight later cost tiers and remain a modeled progression, not directly listed by the wiki.",
+    "status": "Node names and descriptions were checked against the 2026 Unlocks page; costs were checked against the current Unlocks Data code table on 2026-10-20. Screenshot-derived prerequisites remain user-provided unless corroborated by a specific wiki chain. Quantitative upgrade effects not documented on their feature pages remain unimplemented.",
+    "cost_snapshot": {
+      "page": "Unlocks Data",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data",
+      "last_edited": "2025-10-22",
+      "checked": "2026-10-20",
+      "level": 0
+    }
+  },
+  "Loops": {
+    "category": "Coding Core",
+    "position": { "x": 650, "y": 40 },
+    "cost": { "hay": 5 },
+    "prerequisites": [],
+    "features": ["while"],
+    "description": "Unlocks a simple while loop.",
+    "usage": "Repeat indented code while its condition stays true. Use break to exit the nearest loop early, or continue to skip to its next iteration; both control statements are free.",
+    "tutorial": {
+      "title": "Loops",
+      "body": "A while loop repeats its indented block while its condition is true.",
+      "example": "while True:\n    harvest()",
+      "sources": [
+        {
+          "page": "Unlocks",
+          "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks",
+          "last_edited": "2026-08-07"
+        },
+        {
+          "page": "Tooltips Code",
+          "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Tooltips_Code",
+          "last_edited": "2026-08-07"
+        }
+      ]
+    },
+    "cost_source": {
+      "page": "Costs",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Costs",
+      "last_edited": "2026-08-07"
+    }
+  },
+  "Variables": {
+    "category": "Coding Core",
+    "position": { "x": 440, "y": 200 },
+    "visual_parents": ["Operators"],
+    "prerequisites": ["Operators"],
+    "cost": { "carrot": 35 },
+    "features": ["variables"],
+    "usage": "Assign a value to a name, then use that name later in the script.",
+    "source_code": "value = 1",
+    "example_source": {
+      "page": "Variables",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Variables",
+      "last_edited": "2026-08-07"
+    },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "effect_source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "checked": "2026-10-20" },
+    "description": "Assign values to variables.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Operators": {
+    "category": "Coding Core",
+    "position": { "x": 380, "y": 360 },
+    "visual_parents": ["Plant"],
+    "prerequisites": ["Plant"],
+    "cost": { "hay": 150, "wood": 10 },
+    "features": ["operators"],
+    "usage": "Use arithmetic, comparison, and boolean operators in expressions and conditions. Numeric operators, scalar comparisons, and each evaluated and/or operation cost one tick; unary not and numeric +/- are free.",
+    "source_code": "if (2 + 3) * 4 >= 20 and not False:\n    harvest()",
+    "example_source": {
+      "page": "Operators",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operators",
+      "last_edited": "2026-08-07"
+    },
+    "effect_source": { "page": "Operation Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs", "last_edited": "2025-12-04" },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "description": "Unlock arithmetic, comparison, and logic operators. The supported numeric operators and scalar comparisons cost one tick each; unary +/- and not are free.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Lists": {
+    "category": "Coding Core",
+    "position": { "x": 600, "y": 520 },
+    "visual_parents": ["Variables"],
+    "prerequisites": ["Variables"],
+    "cost": { "carrot": 500 },
+    "description": "Use lists to store multiple values.",
+    "features": ["lists"],
+    "usage": "Create lists with [value, ...] and tuples with (value, ...); read either with [index], slice lists, concatenate collections with +, and test list/tuple membership with in or not in. Use len(), list(collection), and for iteration; modify lists with insert(index, value) or remove(value). append() and pop() remain unavailable until their operation costs are verified.",
+    "source_code": "items = [1, 2, 3]\nitems.insert(1, 4)\nitems.remove(2)\nfor item in items:\n    harvest()",
+    "effect_source": { "page": "Lists", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Lists", "checked": "2026-10-20" },
+    "operation_cost_source": { "page": "Operation Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs", "checked": "2026-10-20" },
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Dictionaries": {
+    "category": "Coding Core",
+    "position": { "x": 600, "y": 680 },
+    "visual_parents": ["Lists"],
+    "prerequisites": ["Lists"],
+    "cost": { "pumpkin": 2500 },
+    "description": "Get access to dictionaries and sets.",
+    "features": ["dictionaries"],
+    "usage": "Create dictionaries with {key: value}, retrieve values with dictionary[key], check membership with key in dictionary, iterate over dictionary keys with for, and create a set from a collection with set(collection). Set literals, mutations, and pop() remain unavailable until their costs are verified.",
+    "source_code": "rotation = {1: 2, 2: 3}\nif 1 in rotation:\n    value = rotation[1]\nvalues = set([1, 2, 2])",
+    "effect_source": { "page": "Dictionaries", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Dictionaries", "checked": "2026-10-20" },
+    "operation_cost_source": { "page": "Operation Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs", "checked": "2026-10-20" },
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Functions": {
+    "category": "Coding Core",
+    "position": { "x": 840, "y": 520 },
+    "visual_parents": ["Variables"],
+    "prerequisites": ["Variables"],
+    "cost": { "carrot": 40 },
+    "features": ["functions"],
+    "usage": "Define a function with positional parameters and optional trailing defaults, call it after its def statement, and return a value with return. Default expressions are evaluated once when def runs. Function definitions cost one tick plus the cost of evaluated defaults; a direct call costs only the actions and statements in its body, while calling through a variable adds one tick. Decorators and nested definitions are not supported.",
+    "source_code": "def move_n_dir(n, direction):\n    for i in range(n):\n        move(direction)\nmove_n_dir(2, North)",
+    "effect_source": { "page": "Functions", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Functions", "checked": "2026-10-20" },
+    "operation_cost_source": { "page": "Operation Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs", "checked": "2026-10-20" },
+    "description": "Define custom functions.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Import": {
+    "category": "Coding Core",
+    "position": { "x": 840, "y": 680 },
+    "visual_parents": ["Functions"],
+    "prerequisites": ["Functions"],
+    "cost": { "carrot": 80 },
+    "description": "Import things from other files.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Plant": {
+    "category": "Drone API",
+    "position": { "x": 130, "y": 200 },
+    "visual_parents": ["Speed"],
+    "prerequisites": ["Speed"],
+    "cost": { "hay": 50 },
+    "features": ["planting"],
+    "usage": "Only bushes are available to plant at this stage. The drone plants on its current tile.",
+    "source_code": "plant(Entities.Bush)",
+    "example_source": {
+      "page": "Plant",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Plant",
+      "last_edited": "2026-08-07"
+    },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "description": "Unlock planting. The Plant page says Bush is the only plant currently available at this stage.",
+    "source": { "page": "Plant", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Plant", "last_edited": "2026-08-07" }
+  },
+  "Expand": {
+    "category": "Drone API",
+    "position": { "x": 950, "y": 200 },
+    "visual_parents": ["Speed"],
+    "prerequisites": ["Speed"],
+    "features": ["movement", "farm_1x3"],
+    "levels": [
+      { "cost": { "hay": 30 }, "effects": { "width": 3, "height": 1 } }
+    ],
+    "usage": "Unlocks movement and expands the starting farm to one row of 3 tiles. Attempting to move beyond any field edge returns the drone to (0, 0); later farm upgrades clear the farm.",
+    "source_code": "move(East)",
+    "example_source": {
+      "page": "Expand",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Expand",
+      "last_edited": "2026-08-07"
+    },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "description": "Expand the starting farm and unlock drone movement. Attempting to move beyond a field edge returns the drone to its origin. Later upgrades in this chain clear the farm.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Expand_2": {
+    "category": "Drone API",
+    "position": { "x": 950, "y": 360 },
+    "visual_parents": ["Expand"],
+    "prerequisites": ["Expand"],
+    "features": ["for_loop", "world_size"],
+    "levels": [
+      { "cost": { "wood": 20 }, "effects": { "width": 3, "height": 3 } },
+      { "cost": { "wood": 30, "carrot": 20 }, "effects": { "width": 4, "height": 4 } },
+      { "cost": { "wood": 100, "carrot": 50 }, "effects": { "width": 5, "height": 5 } },
+      { "cost": { "pumpkin": 1000 }, "effects": { "width": 6, "height": 6 } },
+      { "cost": { "pumpkin": 8000 }, "effects": { "width": 7, "height": 7 } },
+      { "cost": { "pumpkin": 64000 }, "effects": { "width": 8, "height": 8 } },
+      { "cost": { "pumpkin": 512000 }, "effects": { "width": 9, "height": 9 } },
+      { "cost": { "pumpkin": 4100000 }, "effects": { "width": 10, "height": 10 } }
+    ],
+    "usage": "The first level costs 20 Wood, clears the farm, and expands it to 3x3. It unlocks for loops, range(), and get_world_size().",
+    "source_code": "for i in range(get_world_size()):\n    harvest()\n    move(North)",
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "effect_source": { "page": "Expand 2", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Expand_2", "checked": "2026-10-20" },
+    "description": "Further farm expansion. The wiki confirms a square grid, the for loop, and get_world_size(). Expansion clears the farm; intermediate sizes are modeled from the user's requested endpoints and the listed tier count."
+  },
+  "Senses": {
+    "category": "Drone API",
+    "position": { "x": 600, "y": 360 },
+    "visual_parents": ["Operators"],
+    "prerequisites": ["Operators"],
+    "cost": { "hay": 100 },
+    "features": ["senses"],
+    "usage": "Read drone position, current ground/entity, and inventory counts. The sensor functions cost one tick each.",
+    "source_code": "if can_harvest():\n    harvest()",
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "effect_source": { "page": "Senses", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Senses", "checked": "2026-10-20" },
+    "description": "Unlock sensors for the drone to inspect its position, entity, and ground.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Speed": {
+    "category": "Drone API",
+    "position": { "x": 1200, "y": 200 },
+    "visual_parents": ["Loops"],
+    "prerequisites": ["Loops"],
+    "levels": [
+      { "cost": { "hay": 20 }, "effects": { "speed_multiplier_per_level": 1.5 } },
+      { "cost": { "wood": 20 }, "effects": { "speed_multiplier_per_level": 1.5 } },
+      { "cost": { "wood": 50, "carrot": 50 }, "effects": { "speed_multiplier_per_level": 1.5 } },
+      { "cost": { "carrot": 500 }, "effects": { "speed_multiplier_per_level": 1.5 } },
+      { "cost": { "carrot": 1000 }, "effects": { "speed_multiplier_per_level": 1.5 } }
+    ],
+    "features": ["speed"],
+    "usage": "Each Speed upgrade increases drone movement and code execution speed by a factor of 1.5. The game applies each tick faster; the editor has no manual speed selector.",
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "effect_source": { "page": "Execution Details", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Execution_Details", "last_edited": "2025-12-04" },
+    "example_source": {
+      "page": "Unlocks",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks",
+      "last_edited": "2026-08-07"
+    },
+    "description": "Each tier multiplies drone movement and code execution speed by 1.5. Tick duration decreases accordingly.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Costs": {
+    "category": "Drone API",
+    "position": { "x": 1350, "y": 200 },
+    "visual_parents": ["Dictionaries"],
+    "prerequisites": ["Dictionaries"],
+    "cost": { "pumpkin": 2500 },
+    "features": ["costs"],
+    "usage": "`get_cost(thing)` reads the cost of planting an entity or buying the next unlock level. `get_cost(unlock, level)` reads a specific zero-based unlock cost.",
+    "source_code": "carrot_cost = get_cost(Unlocks.Carrots)",
+    "effect_source": { "page": "Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Costs", "checked": "2026-10-20" },
+    "description": "Allow code to access the cost of things.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Timing": {
+    "category": "Drone API",
+    "position": { "x": 1060, "y": 680 },
+    "visual_parents": ["Debug"],
+    "prerequisites": ["Debug"],
+    "cost": { "pumpkin": 1000 },
+    "features": ["timing"],
+    "usage": "`get_time()` returns seconds since the game started; `get_tick_count()` returns ticks since the current script execution began. Both functions are free.",
+    "source_code": "get_time()\nget_tick_count()",
+    "effect_source": { "page": "Timing", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Timing", "checked": "2026-10-20" },
+    "description": "Unlock timing tools for measuring execution and game time.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Utilities": {
+    "category": "Drone API",
+    "position": { "x": 600, "y": 840 },
+    "visual_parents": ["Functions"],
+    "prerequisites": ["Functions"],
+    "cost": { "pumpkin": 1000 },
+    "features": ["utilities"],
+    "usage": "Unlocks min() and max() for numbers/strings and sequences, abs() for numbers, and random() in [0,1). abs() and random() cost one tick; min()/max() cost one tick per comparison.",
+    "source_code": "largest = max(1, 4, 2)\nsmallest = min(1, 4, 2)\nrandom()",
+    "effect_source": { "page": "Available Functions", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Available_Functions", "checked": "2026-10-20" },
+    "cost_source": { "page": "Operation Costs", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs", "checked": "2026-10-20" },
+    "description": "Unlock min(), max(), abs(), and random().",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Grass": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 20, "y": 40 },
+    "visual_parents": ["Loops"],
+    "prerequisites": ["Loops"],
+    "features": ["grass_yield"],
+    "levels": [
+      {
+        "cost": { "hay": 300 },
+        "effects": { "grass_yield_multiplier": 2 },
+        "verified_effect": "100% to 200%"
+      },
+      {
+        "cost": { "wood": 500 },
+        "effects": { "grass_yield_multiplier": 4 },
+        "verified_effect": "200% to 400%"
+      }
+    ],
+    "unverified_tiers": [
+      { "cost": { "hay": 100 }, "reason": "The listed cost has no documented effect on the Grass page." },
+      { "cost": { "wood": 2500 } },
+      { "cost": { "wood": 12500 } },
+      { "cost": { "wood": 62500 } },
+      { "cost": { "wood": 312000 } },
+      { "cost": { "wood": 1560000 } },
+      { "cost": { "wood": 7810000 } },
+      { "cost": { "wood": 39100000 } }
+    ],
+    "description": "Grass is available from the start. These verified upgrades increase Hay yielded by harvesting grass; they do not unlock a new seed.",
+    "usage": "Harvest a mature grass tile with harvest(). Verified upgrade levels raise its Hay yield to 2x and then 4x the base amount.",
+    "cost_source": {
+      "page": "Unlocks Data",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data",
+      "last_edited": "2025-10-22"
+    },
+    "effect_source": {
+      "page": "Grass",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Grass",
+      "last_edited": "2025-11-05"
+    },
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Trees": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 130, "y": 360 },
+    "visual_parents": ["Carrots"],
+    "prerequisites": ["Carrots"],
+    "cost": { "wood": 50, "carrot": 70 },
+    "description": "Unlock trees; upgrades increase the yield of bushes and trees.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Carrots": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 300, "y": 560 },
+    "visual_parents": ["Plant"],
+    "prerequisites": ["Plant"],
+    "cost": { "wood": 50 },
+    "features": ["till", "carrots"],
+    "usage": "Unlocks tilling and carrot seeds. till() toggles between grassland and soil; call it once on grassland, then plant a carrot. Calling till() again turns the tile back to grassland. The HUD shows whether the drone's tile is ready for planting or has a growing crop.",
+    "source_code": "till()\nplant(Entities.Carrot)",
+    "example_source": {
+      "page": "Carrots",
+      "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Carrots",
+      "last_edited": "2026-08-07"
+    },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "last_edited": "2025-10-22" },
+    "description": "Unlock tilling and carrots; upgrades increase carrot yield and cost.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Watering": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 120, "y": 720 },
+    "visual_parents": ["Carrots"],
+    "prerequisites": ["Carrots"],
+    "levels": [
+      { "cost": { "wood": 50 }, "effects": { "water_tanks_per_10_seconds": 1 } },
+      { "cost": { "wood": 200 }, "effects": { "water_tanks_per_10_seconds": 2 } },
+      { "cost": { "wood": 800 }, "effects": { "water_tanks_per_10_seconds": 4 } },
+      { "cost": { "wood": 3200 }, "effects": { "water_tanks_per_10_seconds": 8 } },
+      { "cost": { "wood": 12800 }, "effects": { "water_tanks_per_10_seconds": 16 } },
+      { "cost": { "wood": 51200 }, "effects": { "water_tanks_per_10_seconds": 32 } },
+      { "cost": { "wood": 205000 }, "effects": { "water_tanks_per_10_seconds": 64 } },
+      { "cost": { "wood": 819000 }, "effects": { "water_tanks_per_10_seconds": 128 } },
+      { "cost": { "wood": 3280000 }, "effects": { "water_tanks_per_10_seconds": 256 } }
+    ],
+    "features": ["watering"],
+    "usage": "Use use_item(Items.Water) to add one tank (0.25 water) to the current ground. Water level improves plant growth from 1x at 0 to 5x at 1. get_water() reads the level.",
+    "source_code": "if get_water() < 0.5:\n    use_item(Items.Water)",
+    "effect_source": { "page": "Watering", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Watering", "checked": "2026-10-20" },
+    "cost_source": { "page": "Unlocks Data", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks_Data", "checked": "2026-10-20" },
+    "description": "Water the ground to make plants grow faster. A tank holds 0.25 water; water level scales growth from 1x to 5x. One tank is supplied every 10 seconds; each upgrade doubles the supply.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Fertilizer": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 40, "y": 880 },
+    "visual_parents": ["Watering"],
+    "prerequisites": ["Watering"],
+    "cost": { "wood": 500 },
+    "description": "Grow plants instantly; upgrades provide more fertilizer.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Sunflowers": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 340, "y": 880 },
+    "visual_parents": ["Watering"],
+    "prerequisites": ["Watering"],
+    "cost": { "carrot": 500 },
+    "description": "Unlock sunflowers and Power; upgrades increase Power gained.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Pumpkins": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 340, "y": 720 },
+    "visual_parents": ["Trees"],
+    "prerequisites": ["Trees"],
+    "cost": { "wood": 500, "carrot": 200 },
+    "description": "Unlock pumpkins; upgrades increase pumpkin yield and cost.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Cactus": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 450, "y": 1040 },
+    "visual_parents": ["Pumpkins"],
+    "prerequisites": ["Pumpkins"],
+    "cost": { "pumpkin": 5000 },
+    "description": "Unlock cactus; upgrades increase cactus yield and cost.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Polyculture": {
+    "category": "Crops and Farm Tech",
+    "position": { "x": 650, "y": 880 },
+    "visual_parents": ["Mazes"],
+    "prerequisites": ["Mazes"],
+    "description": "Use companion planting to increase yield; upgrades increase its multiplier.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Simulation": {
+    "category": "Advanced Features",
+    "position": { "x": 1350, "y": 40 },
+    "visual_parents": ["Timing"],
+    "prerequisites": ["Timing"],
+    "cost": { "gold": 5000 },
+    "description": "Test code faster under reproducible conditions.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Mazes": {
+    "category": "Advanced Features",
+    "position": { "x": 600, "y": 1040 },
+    "visual_parents": ["Pumpkins"],
+    "prerequisites": ["Pumpkins"],
+    "cost": { "weird_substance": 1000 },
+    "description": "Unlock a maze with treasure; upgrades affect treasure gold and maze substance cost.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Dinosaurs": {
+    "category": "Advanced Features",
+    "position": { "x": 450, "y": 1200 },
+    "visual_parents": ["Pumpkins"],
+    "prerequisites": ["Pumpkins"],
+    "cost": { "cactus": 2000 },
+    "description": "Unlock dinosaurs; upgrades increase dinosaur yield and cost.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Megafarm": {
+    "category": "Advanced Features",
+    "position": { "x": 850, "y": 880 },
+    "visual_parents": ["Functions"],
+    "cost": { "gold": 2000 },
+    "description": "Unlock more drones; upgrades increase the drone count further.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Debug": {
+    "category": "Advanced Features",
+    "position": { "x": 1450, "y": 360 },
+    "visual_parents": ["Plant"],
+    "prerequisites": ["Plant"],
+    "cost": { "hay": 50, "wood": 50 },
+    "description": "Unlock step-by-step debugging, breakpoints, and variable inspection.",
+    "source": { "page": "Debug", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Debug", "last_edited": "2026-05-16" }
+  },
+  "Debug_2": {
+    "category": "Advanced Features",
+    "position": { "x": 1690, "y": 360 },
+    "visual_parents": ["Debug"],
+    "prerequisites": ["Debug"],
+    "cost": { "gold": 500 },
+    "description": "Unlock temporary execution-speed and farm-size controls.",
+    "source": { "page": "Debug 2", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Debug_2", "last_edited": "2026-08-07" }
+  },
+  "Hats": {
+    "category": "Advanced Features",
+    "position": { "x": 1450, "y": 520 },
+    "cost": { "hay": 50 },
+    "description": "Unlock hats for the drone.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Top_Hat": {
+    "category": "Advanced Features",
+    "position": { "x": 1690, "y": 520 },
+    "visual_parents": ["Hats"],
+    "cost": { "hay": 1000000000, "wood": 10000000000, "carrot": 1000000000, "cactus": 1000000000, "gold": 100000000 },
+    "description": "A secret unlock obtained outside the normal research tree.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Auto_Unlock": {
+    "category": "Advanced Features",
+    "position": { "x": 1350, "y": 360 },
+    "visual_parents": ["Costs"],
+    "prerequisites": ["Costs"],
+    "cost": { "pumpkin": 5000 },
+    "description": "Automatically unlock things.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "Leaderboard": {
+    "category": "Advanced Features",
+    "position": { "x": 840, "y": 1000 },
+    "visual_parents": ["Simulation"],
+    "prerequisites": ["Simulation"],
+    "description": "Enter the leaderboard for the fastest times.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  },
+  "The_Farmers_Remains": {
+    "category": "Advanced Features",
+    "position": { "x": 1060, "y": 1000 },
+    "visual_parents": ["Megafarm"],
+    "cost": { "bone": 100000000 },
+    "description": "A hidden unlock whose description is obscured until discovered.",
+    "source": { "page": "Unlocks", "url": "https://thefarmerwasreplaced.wiki.gg/wiki/Unlocks", "last_edited": "2026-08-07" }
+  }
+}
