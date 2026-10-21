@@ -1,0 +1,231 @@
+Brief Proyek: Replika The Farmer Was Replaced dengan Python
+Dokumen perencanaan awal. Versi 1.1, 19 Oktober 2026
+1. Ringkasan
+Kita bikin game puzzle programming versi sendiri pakai Python. Player mengontrol sebuah drone di ladang lewat kode yang diketik di editor, bukan lewat tombol. Drone menjalankan perintah seperti move(), plant(), dan harvest(). Hasil panen dipakai buat unlock fitur baru lewat tech tree, dan tiap unlock menuntut kode yang makin pintar.
+Tujuan proyek ini: belajar (arsitektur game, interpreter/sandbox, threading, GUI), bukan klon 1:1. Jadi boleh menyederhanakan, asal inti sensasinya terasa: ngoding buat gerakin drone, lalu lihat hasilnya jalan pelan-pelan di layar.
+2. Tujuan dan Non-Tujuan
+Tujuan
+• Gameplay 1:1 dengan game aslinya: nama fungsi, biaya tick, tanaman, tech tree, dan aturan mekanik mengikuti wiki resmi.
+• Core loop jalan: tulis kode, klik Run, drone bergerak, panen bertambah.
+• Player menulis kode Python, tapi hanya bisa mengakses API drone dan fitur bahasa yang sudah di-unlock.
+• Waktu dihitung dalam tick per aksi dan per operasi, supaya optimasi kode terasa seperti di game asli.
+• Struktur kode rapi dan modular, gampang ditambah fitur.
+Non-tujuan (untuk saat ini)
+• Fitur online apa pun: game ini murni lokal, tanpa multiplayer, leaderboard online, atau berbagi script.
+• Grafis mewah atau audio.
+• Achievement Steam dan sistem leaderboard resmi.
+• Keamanan sandbox tingkat produksi (cukup untuk pemakaian pribadi).
+3. Scope per Tahap
+MVP (wajib ada)
+• Grid ladang kecil dengan wrap-around.
+• Satu drone.
+• Tanaman dasar: rumput, semak, wortel.
+• API dasar: move, plant, harvest, can_harvest, get_ground_type, get_entity_type, till.
+• Editor kode sederhana plus tombol Run/Stop.
+• Animasi eksekusi langkah demi langkah.
+• Counter inventori dan counter tick.
+Tahap 2
+• Tech tree dan sistem unlock (ladang lebih besar, tanaman baru, fungsi baru).
+• Tanaman tambahan: pohon, labu, bunga matahari, kaktus.
+• Pengaturan kecepatan simulasi (1x, 10x, instan).
+• Simpan/muat script dan progres.
+Tahap 3 (opsional)
+• Maze dan algoritma pencarian jalan.
+• Dinosaurus atau mekanik lanjutan.
+• Multi-drone.
+• Tantangan terstruktur (quest) dengan kondisi menang.
+4. Tech Stack
+• Bahasa: Python 3.11+
+• GUI: tkinter (bawaan Python, tanpa install). Canvas untuk ladang, widget Text untuk editor kode, Button dan Scale untuk kontrol Run/Stop dan kecepatan.
+• Eksekusi script player: interpreter sendiri di atas modul ast, berbentuk generator (lihat 6.5). Dijalankan per frame lewat root.after(), tanpa thread.
+• Data game: file JSON untuk tanaman, biaya, dan tech tree, diambil dari wiki resmi.
+• Testing: pytest untuk dunia, interpreter, dan biaya tick (tanpa GUI).
+5. Arsitektur
+Prinsip utama: pisahkan logika game dari tampilan. Dunia game harus bisa dijalankan dan dites tanpa membuka jendela.
+farmer_replica/
+  main.py              # entry point
+  game/
+    world.py           # grid, petak, aturan pertumbuhan
+    drone.py           # posisi, aksi dasar
+    entities.py        # definisi tanaman dan properti
+    inventory.py       # item dan hasil panen
+    techtree.py        # daftar unlock dan syarat
+    clock.py           # hitung tick dan biaya aksi
+  runtime/
+    interpreter.py     # interpreter AST berbasis generator
+    scheduler.py       # jalankan banyak drone bergantian, hitung tick
+    api.py             # fungsi drone yang diekspos ke player
+    builtins.py        # abs, len, range, list, dict, dst beserta biayanya
+  ui/
+    renderer.py        # gambar ladang di tkinter Canvas
+    hud.py             # inventori, tick, output print
+    editor.py          # editor kode (widget Text)
+  data/
+    entities.json      # properti tanaman (dari wiki)
+    techtree.json      # definisi unlock (dari wiki)
+    costs.json         # biaya tick per fungsi (dari wiki)
+  tests/
+6. Desain Komponen Inti
+6.1 Dunia (World)
+• Grid N x N, tiap petak menyimpan: jenis tanah (grassland atau soil), entitas yang tumbuh (atau kosong), umur/progres tumbuh.
+• Posisi wrap-around: koordinat dihitung dengan modulo ukuran grid.
+• Tanaman tumbuh berdasarkan tick, bukan waktu nyata, sehingga simulasi konsisten di kecepatan berapa pun.
+6.2 Drone
+• Atribut: x, y, arah terakhir.
+• Semua aksi lewat satu pintu (misal drone.perform(action)) supaya biaya tick dan log aksi terpusat.
+6.3 API untuk Player
+Nama dan biaya mengikuti wiki resmi (lihat bagian Sumber). Fungsi baru muncul di namespace player setelah di-unlock.
+Aksi (200 tick jika berhasil, 1 tick jika gagal, kecuali dicatat lain)
+Fungsi
+Fungsi kerja
+Tick (berhasil / gagal)
+move(dir)
+Pindah satu petak, wrap-around di tepi ladang
+200 / 1
+harvest()
+Panen entitas di bawah drone; yang belum matang ikut hancur
+200 / 1
+plant(entity)
+Bayar biaya tanam, lalu tanam
+200 / 1
+till()
+Rumput jadi soil dan sebaliknya
+200
+swap(dir)
+Tukar entitas dengan petak tetangga
+200 / 1
+use_item(item, n)
+Pakai item (misal air atau pupuk)
+200 / 1
+unlock(u)
+Sama dengan klik di tech tree
+200 / 1
+spawn_drone(fn, *args)
+Drone baru menjalankan fungsi
+200 / 1
+clear(), reset(), change_hat(h), set_world_size(n), set_execution_speed(s)
+Bersihkan ladang, reset game, ganti topi, batasi ukuran ladang, batasi kecepatan
+200
+Sensor dan info
+Fungsi
+Fungsi kerja
+Tick
+can_harvest(), can_move(dir)
+Cek siap panen, cek bisa bergerak
+1
+get_entity_type(), get_ground_type()
+Jenis entitas dan tanah di bawah drone
+1
+get_pos_x(), get_pos_y(), get_world_size()
+Posisi drone dan ukuran ladang
+1
+get_water()
+Kadar air petak, 0 sampai 1
+1
+measure(dir)
+Sifat entitas (kelopak bunga matahari, ukuran kaktus, posisi harta atau apel)
+1
+get_companion()
+Tanaman pasangan yang disukai
+1
+num_items(i), num_unlocked(x), get_cost(x)
+Inventori, status unlock, biaya
+1
+num_drones(), max_drones(), has_finished(d), wait_for(d)
+Multi-drone
+1
+get_tick_count(), get_time(), quick_print(...)
+Hitung tick, waktu game, cetak ke halaman output
+0
+print(...), do_a_flip(), pet_the_piggy()
+Tidak terpengaruh speed upgrade
+1 detik
+Fungsi bawaan Python
+Fungsi
+Tick
+abs, len, range, random, str, list.append
+1
+min(...), max(...)
+Jumlah perbandingan
+list(x), set(x), dict(x)
+1 + len(x)
+list.insert(i, e)
+len(list) - i + 1
+pop, remove, set.add
+Bergantung ukuran koleksi (rumus lengkap di wiki)
+API hanya boleh diperluas lewat tech tree: fungsi yang belum di-unlock tidak ada di namespace player.
+6.4 Sistem Tick
+• Satuan waktu adalah tick. Aksi besar (gerak, panen, tanam, dst.) 200 tick jika berhasil dan 1 tick jika gagal; sensor dan fungsi bawaan umumnya 1 tick. Rinciannya ada di tabel 6.3.
+• get_tick_count() mengembalikan total tick sejak script mulai, jadi counter ini juga dipakai player untuk mengukur kodenya.
+• Kecepatan: speed 1 adalah kecepatan drone tanpa upgrade, speed 8 setara tiga speed upgrade. print, do_a_flip, dan pet_the_piggy tidak ikut dipercepat.
+• Biaya operator dasar dan statement (penjumlahan, perbandingan, assignment, loop) belum diambil dari wiki. Keputusan lama "operasi Python biasa gratis" dibatalkan karena target 1:1; angkanya dicek dulu sebelum M2.
+6.5 Eksekusi dan Animasi
+Masalah: script player jalan sekali tuntas, tapi kita mau lihat drone bergerak pelan.
+Pendekatan utama (direvisi): tulis interpreter sendiri di atas modul ast, berbentuk generator. Setiap tick yang dihabiskan di-yield ke scheduler, jadi satu drone bisa dijeda kapan saja. Dari satu desain ini kita dapat hitungan tick yang akurat, tombol Stop, mode debug per baris, dan multi-drone (satu generator per drone, dijalankan bergantian) tanpa thread.
+Alternatif: exec() di thread terpisah dengan antrean aksi. Lebih cepat dibuat, tapi biaya operasi Python biasa tidak bisa dihitung, sehingga kurang cocok untuk target 1:1.
+Keputusan: pakai interpreter generator. Risiko utamanya waktu pengerjaan M2, jadi dukung dulu subset bahasa yang dipakai game: if, elif, else, for, while, def, return, break, continue, pass, and, or, not, serta list, set, dict, dan tuple.
+6.6 Sandbox
+• Interpreter hanya mengenali node AST yang didukung; import dan akses atribut berawalan dunder ditolak.
+• Nama yang bisa dipakai player hanya API drone yang sudah di-unlock plus fungsi bawaan game.
+• Tombol Stop dan batas tick mencegah infinite loop; cukup flag yang dicek di tiap yield.
+• Karena game lokal, tidak perlu pengerasan tambahan.
+6.7 Tech Tree
+• Didefinisikan di techtree.json: nama, biaya (item), prasyarat, dan efek (unlock fungsi, tanaman, fitur bahasa, atau ukuran ladang).
+• Daftar unlock di wiki: Grass, Plant, Expand, Expand_2, Speed, Loops, Variables, Operators, Functions, Lists, Dictionaries, Senses, Utilities, Costs, Timing, Carrots, Trees, Watering, Fertilizer, Pumpkins, Sunflowers, Polyculture, Cactus, Dinosaurs, Mazes, Megafarm, Hats, Top_Hat, Import, Debug, Debug_2, Auto_Unlock, Simulation, Leaderboard, The_Farmers_Remains.
+• Nama seperti Loops, Functions, dan Lists menandakan fitur bahasa ikut dikunci; perlu dikonfirmasi di halaman Unlocks wiki.
+• Urutan, biaya, dan efek tiap unlock belum diambil; wiki mencatat tech tree dirombak di versi 1.0.
+6.8 UI
+• Ladang digambar di Canvas (petak berwarna, tanaman, drone) dan digambar ulang per langkah scheduler lewat root.after().
+• Editor memakai widget Text (nomor baris, highlight sederhana lewat tag), dengan tombol Run/Stop dan slider kecepatan.
+• HUD: inventori, tick, output print, dan pesan error.
+7. Data-Driven Design
+Simpan properti tanaman dan tech tree di JSON, bukan di-hardcode. Contoh entri tanaman (angkanya hanya contoh, bukan data resmi):
+{
+  "carrot": {
+    "grow_ticks": 4000,
+    "requires_ground": "soil",
+    "yield": { "carrot": 1 }
+  }
+}
+Manfaatnya: tambah tanaman baru tanpa menyentuh logika inti, dan gampang menyeimbangkan angka.
+8. Milestone
+1. M1: Dunia tanpa UI. Grid, drone, aksi dasar, tick. Dites lewat pytest.
+2. M2: Interpreter dan API. Interpreter generator untuk subset bahasa game, API dasar, biaya tick dites terhadap tabel wiki; output ke terminal.
+3. M3: Render tkinter. Canvas untuk ladang, scheduler dijalankan per frame lewat after().
+4. M4: Tanaman dan pertumbuhan. Data-driven dari wiki, panen, inventori.
+5. M5: Editor dan kontrol. Widget Text, Run/Stop, kecepatan, tampilan error.
+6. M6: Tech tree. Unlock termasuk pengunci fitur bahasa, simpan progres.
+7. M7+: Mekanik lanjutan 1:1. Labu, kaktus, bunga matahari, polyculture, air dan pupuk, maze, dinosaurus, multi-drone.
+9. Risiko dan Mitigasi
+Risiko
+Dampak
+Mitigasi
+Interpreter sendiri makan waktu
+M2 molor
+Dukung subset bahasa dulu, tes per fitur; fallback exec + thread dengan tick kurang akurat
+Infinite loop di script player
+Game hang
+Tombol Stop, flag dicek di tiap yield
+Angka 1:1 salah ingat atau meleset
+Gameplay tidak sama
+Ambil dari wiki resmi, catat sumber dan tanggal, simpan di JSON
+Wiki tidak lengkap atau berubah
+Data tidak cocok dengan versi game
+Tentukan versi game acuan, perbarui JSON saat wiki berubah
+Scope membengkak
+Proyek mandek
+Kunci MVP dulu; fitur tahap 3 hanya setelah M5 selesai
+10. Definisi Selesai (MVP)
+• Player bisa menulis script yang mengelilingi ladang, menanam, dan memanen secara otomatis.
+• Drone bergerak terlihat di layar dengan kecepatan yang bisa diatur.
+• Tick akurat: biaya aksi dan fungsi bawaan cocok dengan tabel wiki, diverifikasi tes otomatis.
+• Error di script player ditampilkan jelas tanpa membuat game crash.
+• Dunia game dan interpreter punya tes otomatis dasar.
+11. Keputusan dan Pertanyaan Terbuka
+• Diputuskan: game lokal saja, tanpa fitur online.
+• Diputuskan: GUI memakai tkinter.
+• Diputuskan: gameplay 1:1 dengan game aslinya.
+• Terbuka: biaya tick operator dasar dan statement Python, serta waktu tumbuh dan harga tiap tanaman dan unlock; perlu diambil dari halaman Costs, Entities, dan Unlocks di wiki.
+• Terbuka: versi game yang jadi acuan, karena wiki mengikuti versi 1.0 ke atas.
+12. Sumber
+• Tooltips Code, The Farmer Was Replaced Wiki: daftar fungsi, biaya tick, serta nilai Entities, Items, Grounds, Hats, dan Unlocks. Dibuka 19 Oktober 2026; halaman terakhir diedit di wiki pada 7 Agustus 2026.

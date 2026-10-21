@@ -1,0 +1,10 @@
+In The Farmer Was Replaced, speed upgrades increase the movement speed of the farming drone and the execution speed of your Python-style code. 
+The base operation time starts at 2.5 ms (about 400 ticks per second), and speed upgrades reduce tick time by a factor of 1.5,
+ while Sunflower power can further double your speed
+
+
+Speed Mechanics and Upgrades
+
+• Base Operation Time: Starts at 2.5 ms (roughly 0.5 seconds for a 200-operation action like harvesting).
+• Speed Unlocks: Each speed upgrade reduces operation time by a factor of 1.5 (e.g., Speed 1 makes ticks take 2/3 of normal time, or ~1.667 ms).
+• Drone & Code Speed: Upgrading speed boosts both physical drone movement across the grid and how fast your scripts process commands.

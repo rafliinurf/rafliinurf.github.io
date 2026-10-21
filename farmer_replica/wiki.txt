@@ -1,0 +1,163 @@
+Berikut adalah rangkuman lengkap isi dari The Farmer Was Replaced Wiki mengenai game simulasi pemrograman (programming idler game) buatan Timon Herzog.
+Di dalam game ini, pemain bertugas mengotomatisasi drone pertanian menggunakan bahasa pemrograman mirip Python untuk mengumpulkan sumber daya dan meningkatkan efisiensi lahan.
+
+1. Mekanik Dasar & Struktur Pemrograman
+
+Game ini mengajarkan konsep dasar coding secara bertahap melalui sistem riset (Research Tree). Beberapa pilar pemrograman yang dirangkum dalam wiki meliputi:
+• Sintaks Dasar & Variabel: Menggunakan operator = untuk menyimpan nilai atau hasil fungsi (misalnya b = can_harvest()), serta operator perbandingan (==, !=, dll) dan logika (and, or, not).
+• Loops (Perulangan): Menggunakan while untuk eksekusi terus-menerus tanpa membuat game membeku (freeze), dan for bersama range() serta get_world_size() untuk menjelajahi seluruh petak grid farm.
+• Struktur Data: Menggunakan Lists (untuk menyimpan koordinat atau antrean tanaman) serta Dictionaries (untuk memetakan data, seperti arah kompas atau kalkulasi biaya unlock).
+• Fungsi & Simulasi: Pemain bisa membuat fungsi kustom menggunakan kata kunci def. Terdapat juga fitur simulate() untuk menguji kode di lab simulasi tanpa mengubah status farm asli.
+
+2. Entitas Tanaman & Tanah (Entities & Grounds)
+
+Setiap tanaman memiliki karakteristik, waktu tumbuh, dan hasil panen yang berbeda:
+• Grass: Tumbuh di lahan Grassland (bawaan), menghasilkan Hay.
+• Bush & Tree: Menghasilkan Wood. Pohon tumbuh lebih lambat jika ditaruh bersebelahan dengan pohon lain.
+• Carrots: Membutuhkan perintah till() untuk mengubah tanah menjadi Soil sebelum bisa ditanam.
+• Pumpkins: Tumbuh bersama secara berkelompok. Ada peluang 1 banding 5 tanaman labu mati menjadi Dead Pumpkin yang tidak berguna, sehingga kodenya harus bisa mendeteksi dan menanam ulang.
+• Sunflowers: Menghasilkan Power yang dapat melipatgandakan kecepatan drone.
+• Cactus: Memiliki 10 ukuran berbeda dan membutuhkan logika penyortiran saat panen.
+
+3. Barang dan Alat Bantu (Items)
+
+Hasil panen akan masuk ke dalam inventaris sebagai item yang bisa digunakan kembali atau ditukar:
+• Water & Fertilizer: Digunakan lewat item fungsi untuk mempercepat pertumbuhan tanaman (pupuk secara instan memotong waktu tumbuh sebanyak 2 detik).
+• Gold: Didapat dari menyelesaikan labirin (Mazes) dan membuka peti harta karun.
+• Weird Substance: Didapat dari tanaman yang terinfeksi untuk memicu pertumbuhan labirin.
+
+4. Fitur End-Game: Dinosaurs & Megafarm
+
+• Dinosaurs: Mekanik unik di mana drone menggunakan kosmetik Hats.Dinosaur_Hat. Drone akan membeli apel dengan kaktus, memakannya, lalu menumbuhkan ekor di belakangnya layaknya game Snake untuk menghasilkan Bone (tulang dinosaurus).
+• Megafarm (Multi-Drone): Fitur mutakhir yang memungkinkan pemain memanggil banyak drone sekaligus menggunakan fungsi spawn_drone(function). Setiap drone akan menjalankan fungsi programnya masing-masing secara paralel tanpa saling bertubrukan.
+
+Untuk mengimplementasikan mekanik till() pada tanaman Carrots, kamu perlu membuat sistem dua lapis (two-layer system) pada grid game kamu: Lapisan Tanah (Ground Type) dan Lapisan Tanaman (Crop Type).
+Jadi, drone tidak bisa langsung menanam wortel sebelum tipe tanah di petak tersebut berubah dari "grass" menjadi "soil".
+Berikut adalah cara kerja logika dan contoh implementasi kodenya dalam Python:
+
+1. Logika di dalam Game Engine (game_engine.py)
+
+Di dalam struktur data grid game, setiap petak harus menyimpan informasi status tanah dan tanaman.
+python
+# Inisialisasi grid (contoh ukuran 4x4)
+# Default awal: Semua petak berbentuk rumput ("grass") dan tidak ada tanaman ("none")
+grid = [[{"ground": "grass", "crop": "none"} for _ in range(4)] for _ in range(4)]
+
+# Inventaris untuk menampung hasil panen
+inventory = {"hay": 0, "carrot": 0}
+Use code with caution.
+
+2. Membuat Fungsi API Drone (drone_functions.py)
+
+Kamu harus menyediakan fungsi till(), plant(), dan harvest() yang nantinya akan dipanggil oleh kode si pemain.
+python
+def till(drone_x, drone_y):
+    """Mengubah tanah rumput menjadi tanah gembur (Soil)"""
+    current_tile = grid[drone_x][drone_y]
+    
+    if current_tile["ground"] == "grass":
+        current_tile["ground"] = "soil"
+        print(x="Tanah berhasil dicangkul menjadi Soil!")
+    else:
+        print(x="Tanah sudah berupa Soil.")
+
+def plant(drone_x, drone_y, crop_type):
+    """Menanam tanaman berdasarkan aturan tipe tanah"""
+    current_tile = grid[drone_x][drone_y]
+    
+    if crop_type == "carrot":
+        # Syarat wajib Carrot: Tanah harus berupa Soil
+        if current_tile["ground"] == "soil":
+            current_tile["crop"] = "carrot"
+            print(x="Wortel berhasil ditanam.")
+        else:
+            print(x="Gagal menanam! Wortel butuh tanah gembur (Soil).")
+            
+    elif crop_type == "grass":
+        # Grass bisa ditanam di petak mana saja (atau otomatis tumbuh)
+        current_tile["crop"] = "grass"
+Use code with caution.
+
+3. Cara Pemain Menulis Kodenya (Script Pemain)
+
+Ketika replika game kamu mendeteksi kode dari pemain, algoritma yang harus ditulis pemain agar bisa menanam wortel dengan sukses adalah seperti ini:
+python
+# Kode yang ditulis oleh Pemain di dalam game
+move(0, 0)        # Drone bergerak ke koordinat (0,0)
+till()            # Mengubah tanah petak (0,0) menjadi 'soil'
+plant("carrot")   # Sekarang wortel sukses ditanam!
+Use code with caution.
+
+Alur Kerja Deteksi & Eksekusi
+
+[Drone di Petak] 
+       │
+       ▼
+[ Cek Perintah: plant("carrot") ]
+       │
+       ├──> Jika tanah == "grass" ──> Batalkan / Error (Muncul pesan log game)
+       │
+       └──> Jika tanah == "soil"  ──> Sukses ditanam (Ubah state grid)
+
+Ringkasan Aturan State Tanah & Tanaman
+
+
+Tipe Tanah (ground)	Tanaman yang Diizinkan (crop)	Syarat Eksekusi Perintah	Hasil Panen (inventory)
+Grass (Default)	Grass, Bush, Tree	Langsung pakai plant()	Hay, Wood
+Soil (Hasil till())	Carrots, Pumpkins, Sunflowers	Harus panggil till() terlebih dahulu	Carrot, Pumpkin, Power
+
+Di dalam game aslinya (The Farmer Was Replaced), fungsi till() bekerja dengan mekanik Toggle (Sakelar Bolak-balik).
+Jadi, fungsi ini tidak hanya mengubah rumput menjadi tanah gembur, tetapi juga bisa mengembalikan tanah gembur tersebut menjadi rumput kembali jika dipanggil dua kali di petak yang sama.
+Berikut adalah detail lengkap cara kerja fungsi till() di game aslinya yang bisa kamu tiru untuk replikamu:
+
+1. Sifat Toggle (Bolak-balik)
+
+• Jika drone berada di atas petak Grassland (GroundType.Turf / Rumput) dan kamu memanggil till(), maka tanah berubah menjadi Soil (Tanah Gembur).
+• Jika drone berada di atas petak Soil dan kamu memanggil till() lagi, maka tanahnya akan revert (kembali) menjadi Grassland.
+
+2. Fungsi Sensor Pendukung: get_ground_type()
+
+Di dalam game, pemain tidak asal memanggil till(). Agar kode mereka efisien dan tidak sengaja mengubah tanah yang sudah jadi soil kembali menjadi rumput, game menyediakan fungsi sensor bernama get_ground_type().
+Pemain biasanya menulis logika seperti ini di game aslinya:
+python
+# Jika tipe tanah saat ini BUKAN soil, baru lakukan till()
+if get_ground_type() != Grounds.Soil:
+    till()
+    
+plant(Entities.Carrots)
+Use code with caution.
+
+3. Otomatisasi Saat Panen (Harvest)
+
+Saat tanaman seperti wortel atau labu dipanen menggunakan perintah harvest(), tanahnya tidak otomatis berubah kembali jadi rumput. Tanah tersebut akan tetap berupa Soil. Pemain bisa langsung menanam wortel baru di atasnya tanpa perlu memanggil till() lagi, kecuali jika mereka sengaja ingin mengubahnya kembali jadi rumput.
+
+Cara Mengimplementasikan Mekanik Asli Ini di Python (Replika Kamu)
+
+Kamu bisa memperbarui logika fungsi till() di game engine kamu menggunakan operator kondisional sederhana agar sifat toggle-nya persis seperti game aslinya:
+python
+def till(drone_x, drone_y):
+    """Fungsi till() dengan mekanik toggle sesuai game asli"""
+    current_tile = grid[drone_x][drone_y]
+    
+    # Jika tanahnya rumput, ubah jadi soil
+    if current_tile["ground"] == "grass":
+        current_tile["ground"] = "soil"
+        
+    # Jika tanahnya sudah soil, kembalikan jadi rumput (Toggle)
+    elif current_tile["ground"] == "soil":
+        current_tile["ground"] = "grass"
+Use code with caution.
+Lalu jangan lupa buat fungsi sensornya untuk dipakai oleh kode pemain:
+python
+def get_ground_type(drone_x, drone_y):
+    """Mengembalikan tipe tanah di bawah drone saat ini"""
+    return grid[drone_x][drone_y]["ground"]
+Use code with caution.
+
+Summary Aturan till() Game Asli
+
+
+Kondisi Awal Tanah	Perintah yang Dipanggil	Kondisi Akhir Tanah
+grass	till()	soil (Siap ditanam wortel)
+soil	till()	grass (Kembali ke bawaan)
+soil (Ada Wortel)	harvest()	soil (Tetap gembur, siap tanam ulang)

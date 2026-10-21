@@ -1,0 +1,46 @@
+Game Progression Flow lengkap dari game asli The Farmer Was Replaced. Alur ini menggambarkan bagaimana pemain berkembang dari awal bermain (manual) hingga tahap akhir (end-game automation) berdasarkan apa yang di-unlock di dalam game:
+
+Phase 1: The Manual Era (Awal Game)
+
+Pemain memulai permainan di sebuah lahan grid kecil (1x1) yang sangat terbatas.
+• Kondisi Awal: Ladang hanya berisi rumput (Grass). Drone hanya memiliki dua perintah dasar bawaan: harvest() dan do_a_flip().
+• Aksi Pemain: Pemain harus mengetik harvest(), lalu menekan tombol Run. Drone akan memanen 1 rumput menjadi Hay, lalu program langsung berhenti. Pemain harus menekan tombol Run berulang-ulang secara manual untuk mengumpulkan Hay.
+• Tujuan: Mengumpulkan Hay dalam jumlah tertentu untuk membuka menu Riset (Research Tree) pertama: Loops (Perulangan).
+
+Phase 2: The Loop & Grid Expansion (Lahirnya Otomatisasi)
+
+Setelah Loops terbuka, permainan mulai berubah menjadi game otomatisasi asli.
+• Fitur Baru: Akses ke perintah while True, variabel, fungsi pergerakan (move()), serta ekspansi ukuran grid menjadi lebih luas (misal 3x3 atau 4x4).
+• Mekanik Baru: Pemain membuka jenis tanaman baru bernama Bushes dan Trees yang menghasilkan Wood (Kayu). Pohon memiliki aturan unik: jika ditanam bersebelahan, kecepatan tumbuhnya melambat.
+• Aksi Pemain: Pemain mulai menulis kode agar drone berjalan memutar atau zig-zag mengelilingi grid tanpa henti, lalu memanen rumput dan kayu secara otomatis saat drone lewat.
+
+Phase 3: Senses & Smart Farming (Petani Cerdas)
+
+Memasuki fase pertengahan, ladang semakin luas dan tanaman menjadi lebih kompleks. Pemain tidak bisa lagi sekadar memanen secara acak.
+• Fitur Baru: Sensor fungsi seperti can_harvest(), get_ground_type(), get_water(), perintah cangkul till(), serta struktur logika if/else dan for loops.
+• Mekanik Baru: Pemain membuka tanaman Carrots (Wortel) dan Pumpkins (Labu). Wortel wajib ditanam di atas Soil (hasil dicangkul dengan till()). Labu harus tumbuh bersama dalam satu kelompok besar agar bisa dipanen menjadi mega-pumpkin.
+• Aksi Pemain: Pemain memprogram drone untuk mengecek kondisi kematangan tanaman sebelum memotong (if can_harvest()) dan menyiram air secara otomatis agar tanaman tidak kering.
+
+Phase 4: Advanced Sorting & The Maze (Logika Tingkat Tinggi)
+
+Fase di mana kemampuan algoritma pemain benar-benar diuji dengan tantangan yang tidak biasa.
+• Fitur Baru: Fungsi matematika dasar, struktur data Lists dan Dictionaries, serta fitur tukar barang (Trade).
+• Mekanik Baru: Pemain membuka tanaman Cactus (Kaktus) dan fitur Mazes (Labirin). Kaktus tumbuh dengan ukuran acak (1-10) dan hanya memberikan hasil maksimal jika dipanen berurutan dari yang terkecil ke terbesar (butuh algoritma sorting). Untuk Labirin, lahan berubah menjadi koridor berliku di mana drone harus mencari jalan ke peti emas.
+• Aksi Pemain: Pemain membuat fungsi kustom (def) untuk menyortir kaktus di dalam memori sebelum memotongnya, serta menulis algoritma pencarian jalur (Pathfinding seperti Wall Follower atau BFS) untuk menyelesaikan labirin secara otomatis.
+
+Phase 5: The End-Game (Dinosaurus & Megafarm)
+
+Tahap akhir permainan di mana pemain mengelola industri pertanian skala raksasa yang sangat efisien.
+• Fitur Baru: Multi-drone (spawn_drone()) dan kosmetik khusus Dinosaur_Hat.
+• Mekanik Baru: Sistem Dinosaurs (D drone memakai topi dino, memakan apel, dan tumbuh memanjang seperti game Snake untuk memproduksi Bone) dan Megafarm (mengontrol banyak drone sekaligus di satu lahan).
+• Aksi Pemain: Pemain menulis sistem manajemen paralel. Satu drone bertugas menyiram air, drone lain menanam wortel, drone lain menyelesaikan labirin, dan drone sisanya mengurus dinosaurus. Semua kode terhubung dan bekerja sama secara harmonis tanpa saling bertubrukan.
+
+📊 Tabel Rangkuman Alur Progresi Game
+
+
+Fase	Fokus Sumber Daya	Struktur Logika Utama	Tantangan Utama Pemain
+1. Manual	Hay (Rumput)	Sekuensial (Baris per baris)	Menekan tombol klik Run berulang kali.
+2. Loop	Hay, Wood	while True, Pergerakan Grid	Membuat drone bergerak efisien memutari area.
+3. Senses	Carrot, Pumpkin	if/else, can_harvest(), till()	Mengatur manajemen air dan jenis tanah.
+4. Sorting	Gold, Cactus	Lists, Algoritma Sorting & Pathfinding	Menyortir ukuran kaktus & mencari jalan di labirin.
+5. End-Game	Bone, All Resources	Multi-threading (spawn_drone)	Sinkronisasi banyak drone agar tidak tabrakan.

@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "source": "https://thefarmerwasreplaced.wiki.gg/wiki/Tooltips_Code",
+    "source_last_edited": "2026-08-07",
+    "timing_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Timing",
+    "timing_source_last_edited": "2026-08-07",
+    "timing_functions_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Timing",
+    "timing_functions_checked": "2026-10-20",
+    "operation_cost_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs",
+    "operation_cost_source_last_edited": "2025-12-04",
+    "clear_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Available_Functions",
+    "get_cost_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Costs",
+    "get_cost_max_level_note": "Costs documents None for maxed unlocks; Available_Functions documents {}. Runtime follows Costs.",
+    "collection_operations_source": "https://thefarmerwasreplaced.wiki.gg/wiki/Operation_Costs",
+    "collection_operations_checked": "2026-10-20",
+    "dictionary_literal_note": "Operation Costs repeats conflicting generic rows for list/dictionary literals. The dedicated dictionary row (1 + number of entries + operand costs) is used.",
+    "status": "Biaya aksi, sensor, scalar operators, loop control, tuple/list operations, custom function definition/calls, literal dictionary, numeric/tuple-key membership, dan collection conversion didukung sumber wiki; ambiguous operations remain disabled."
+  },
+  "actions": {
+    "move":     { "success": 200, "fail": 1 },
+    "clear":    { "success": 200, "fail": 1 },
+    "harvest":  { "success": 200, "fail": 1 },
+    "plant":    { "success": 200, "fail": 1 },
+    "till":     { "success": 200, "fail": 200 },
+    "swap":     { "success": 200, "fail": 1 },
+    "use_item": { "success": 200, "fail": 1 }
+  },
+  "sensors": {
+    "can_harvest": 1,
+    "can_move": 1,
+    "get_entity_type": 1,
+    "get_cost": 1,
+    "get_ground_type": 1,
+    "get_pos_x": 1,
+    "get_pos_y": 1,
+    "get_world_size": 1,
+    "get_water": 1,
+    "measure": 1,
+    "num_items": 1,
+    "num_unlocked": 1
+  },
+  "statements": {
+    "if": 1,
+    "for": 1,
+    "while": 1,
+    "function_definition": 1,
+    "indirect_function_call": 1
+  },
+  "operators": {
+    "+": 1,
+    "-": 1,
+    "*": 1,
+    "/": 1,
+    "//": 1,
+    "%": 1,
+    "**": 1,
+    "==": 1,
+    "!=": 1,
+    "<": 1,
+    "<=": 1,
+    ">": 1,
+    ">=": 1,
+    "and": 1,
+    "or": 1
+  },
+  "builtins": {
+    "range": 1,
+    "get_time": 0,
+    "get_tick_count": 0
+  },
+  "collection_operations": {
+    "list_literal": { "empty": 1, "per_item": 1 },
+    "list_index": 1,
+    "tuple_literal": { "base": 1 },
+    "list_slice": { "base": 1 },
+    "list_membership": { "base": 1 },
+    "list_insert": { "base": 1, "length_factor": 1, "index_factor": -1 },
+    "list_remove": { "length_factor": 1 },
+    "dictionary_literal": { "empty": 1, "base": 1, "per_entry": 1 },
+    "list_from_collection": { "base": 1, "per_item": 1 },
+    "set_from_collection": { "base": 1, "per_item": 1 },
+    "len": 1
+  }
+}

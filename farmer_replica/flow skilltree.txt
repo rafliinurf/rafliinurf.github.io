@@ -1,0 +1,101 @@
+rangkuman alur (flow) pengerjaan dan mekanisme sistem Research / Skill Tree dari game aslinya untuk diterapkan ke dalam replika Python kamu:
+
+1. Siklus Inti Mekanisme Riset (Core Loop)
+
+Alur interaksi pemain dengan menu riset berjalan dalam 4 tahapan berulang:
+1. Kumpulkan Bahan: Drone memanen komoditas (misal: Hay, Wood, Carrot).
+2. Cek Syarat (Prerequisite): Pemain membuka menu riset. Node teknologi baru hanya akan aktif (bisa diklik) jika node di atasnya sudah sukses di-unlock.
+3. Transaksi / Bayar: Jika bahan mencukupi dan syarat terpenuhi, pemain mengeklik node tersebut. Sumber daya di inventaris akan berkurang sesuai harga riset.
+4. Buka Kemampuan Baru (Unlock Feature): Game engine memperbarui daftar fungsi atau sintaks yang diizinkan untuk dieksekusi oleh interpreter kode pemain.
+
+2. Hirarki Jalur Progresi Node (Dari Awal - Akhir)
+
+Secara garis besar, pohon riset di dalam game terbagi menjadi beberapa jalur utama yang saling berpotongan:
+• Jalur Logika Pemrograman:
+Manual Per-Baris ➔ Loops (while/for) ➔ Variables & Operators ➔ Lists & Dictionaries ➔ Custom Functions (def) ➔ Parallel Threads
+• Jalur Botani (Tanaman):
+Grass ➔ Bushes & Trees ➔ Carrots ➔ Pumpkins ➔ Sunflowers ➔ Cactus
+• Jalur Upgrade Drone & Lahan:
+Grid 1x1 ➔ Ekspansi Grid (3x3, 4x4, dst) ➔ Kecepatan Drone ➔ Sensor (can_harvest/get_water) ➔ Multi-Drone (spawn_drone)
+
+3. Alur Logika Deteksi Validasi pada Code Editor
+
+Sistem riset ini terhubung langsung dengan apa yang bisa diketik oleh pemain di editor kode bawaanmu. Alur validasinya adalah sebagai berikut:
+[ Pemain mengetik kode & klik RUN ]
+               │
+               ▼
+[ Python Engine memindai kata kunci / fungsi ]
+               │
+               ├──> Menggunakan `while`? ──> Cek status Node Loops ──> Jika False ──> Error: "Belum di-unlock!"
+               │
+               └──> Memanggil `till()`? ──> Cek status Node Carrots ──> Jika False ──> Error: "Fungsi tidak dikenal!"
+
+📌 Ringkasan Status Node untuk Tabel Data UI
+
+
+Status Node	Kondisi di Game Engine	Tampilan Visual di UI	Aksi Klik Pemain
+Locked	Node di atasnya belum di-unlock.	Abu-abu gelap / Garis putus-putus.	Tidak bisa diklik (Tombol mati).
+Available	Syarat terpenuhi, tapi bahan belum dibayar.	Teks putih / Tombol menyala biasa.	Mengurangi inventory & mengubah status jadi Unlocked.
+Unlocked	Sudah dibeli oleh pemain.	Berwarna Hijau terang.	Menambahkan fungsi baru ke daftar API Drone secara permanen.
+
+Di dalam Research Tree (Skill Tree) game asli The Farmer Was Replaced, terdapat total sekitar 32 node upgrade yang dibagi menjadi beberapa kategori utama. Setiap kali pemain membuka sebuah node, game akan memberikan kemampuan pemrograman baru atau membuka jenis mekanik pertanian baru.
+Berikut adalah daftar lengkap isi skill tree berdasarkan kategori fungsinya yang bisa kamu masukkan ke dalam database replikamu:
+
+1. Kategori Sintaks & Struktur Data (Coding Core)
+
+Node di kategori ini membuka batasan kode Python yang bisa ditulis oleh pemain:
+• Loops: Membuka fungsi perulangan while loops agar drone bisa jalan terus-menerus.
+• Variables: Membuka kemampuan membuat variabel dan menetapkan nilai (value assignment).
+• Operators: Membuka operator matematika dan logika (+, -, ==, and, or, dll).
+• Lists: Membuka struktur data List untuk menyimpan antrean atau koordinat.
+• Dictionaries: Membuka struktur data Dictionary dan Sets untuk pemetaan data yang lebih kompleks.
+• Functions: Membuka kata kunci def agar pemain bisa membuat fungsi kustom sendiri.
+• Import: Membuka fitur untuk mengimpor file eksternal.
+
+2. Kategori Perintah & Sensor Drone (Drone API)
+
+Node ini memberikan "mata" dan kemampuan fisik baru bagi drone untuk merespons lingkungan sekitar:
+• Plant: Membuka fungsi perintah plant() untuk menanam bibit.
+• Senses: Membuka sensor penglihatan drone untuk mendeteksi jenis tanaman di petaknya serta membaca posisi koordinat drone saat ini.
+• Speed: Meningkatkan kecepatan fisik drone di grid dan kecepatan eksekusi baris kode.
+• Expand / Expand_2: Memperluas ukuran lahan grid pertanian dan membuka fungsi pergerakan drone.
+• Costs: Membuka akses untuk mengecek harga item secara langsung lewat kode.
+• Timing: Membuka fungsi/alat bantu untuk menghitung durasi waktu pertumbuhan tanaman.
+• Utilities: Membuka fungsi matematika bawaan seperti min(), max(), abs(), dan random().
+
+3. Kategori Entitas Tanaman & Pertanian (Crops & Farm Tech)
+
+Node ini membuka komoditas baru untuk dipanen demi mendapatkan mata uang riset yang lebih tinggi:
+• Grass: Meningkatkan jumlah hasil panen rumput (Hay yield).
+• Trees: Membuka opsi menanam tanaman berkayu yaitu Bushes dan Trees.
+• Carrots: Membuka perintah cangkul till() dan membuka benih wortel (Carrots).
+• Watering: Membuka fitur penyiraman air agar tanaman tumbuh lebih cepat.
+• Fertilizer: Membuka opsi menggunakan pupuk untuk memotong waktu tumbuh secara instan.
+• Sunflowers: Membuka bunga matahari (Sunflowers) untuk menghasilkan Power pengganda kecepatan drone.
+• Pumpkins: Membuka labu (Pumpkins) beserta peningkatan hasil panennya.
+• Cactus: Membuka kaktus (Cactus) beserta peningkatan hasil dan penyesuaian biayanya.
+• Polyculture: Membuka metode pertanian tumpang sari (companion planting) di mana tanaman tertentu tumbuh lebih cepat jika berdampingan dengan jenis lain.
+
+4. Kategori Fitur Spesial & End-Game (Advanced Features)
+
+Node tingkat lanjut untuk membuka mode permainan baru dan optimasi tingkat tinggi:
+• Simulation: Membuka lab simulasi untuk menguji kode pemain dengan sangat cepat dan dapat diulang (reproducible) tanpa memengaruhi lahan asli.
+• Mazes: Mengubah lahan pertanian menjadi labirin berliku yang dipenuhi peti harta karun berisi Gold.
+• Dinosaurs: Membuka mekanik hewan purba (Dinosaurus) untuk mengumpulkan tulang.
+• Megafarm: Membuka fitur pamungkas untuk memanggil banyak drone sekaligus (multi-drone).
+• Debug / Debug_2: Membuka alat bantu pelacakan galat (debugging program).
+• Hats / Top_Hat: Membuka aksesoris kosmetik topi untuk drone pemain.
+• Auto_Unlock: Fitur otomatisasi untuk membuka teknologi baru.
+• Leaderboard: Membuka entri papan peringkat untuk mode speedrun.
+• The_Farmers_Remains: Penemuan rahasia tersembunyi di dalam game.
+
+📊 Tabel Matriks Hubungan Riset (Untuk Rancangan Database Game)
+
+
+Nama Node	Syarat Pembukaan (Requires)	Fungsi Utama yang Aktif	Jenis Mata Uang Pembayaran
+Loops	Awal Game / Otomatis	Mengizinkan sintaks while	Hay
+Trees	Loops	Mengizinkan plant(Entities.Tree)	Hay
+Variables	Loops	Mengizinkan pembuatan variabel (x = 1)	Hay / Wood
+Carrots	Variables	Mengizinkan perintah till() dan benih wortel	Wood
+Mazes	Lists & Dictionaries	Mengubah grid menjadi labirin harta karun	Carrot / Pumpkin
+Megafarm	Functions	Mengizinkan perintah spawn_drone()	Gold / Bone
